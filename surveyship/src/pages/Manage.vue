@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <h1>Welcome to the manage page</h1>
+        <h1>Manage: {{ content.title }}</h1>
 
         <div class="container columns is-multiline is-centered" style="margin:auto;" >
             <form class="column is-one-third uk-form-stacked">
@@ -26,15 +26,16 @@
 
         <div class="container columns is-multiline is-centered" style="margin:auto;">
             <div class="column is-half">
-                <div v-for="question in questionList" :key="questionList">
-                    <Question v-bind:content="question"/>
+                <div v-for="question in questionList">
+                    <QuestionManager v-bind:content="question"/>
                 </div>
             </div>
         </div>
 
+        <hr>
+
         <!-- Add question button -->
-        <button class="uk-icon-button" uk-icon="plus-circle; ratio: 3;" type="button"></button>
-        <!-- <a href="" class="uk-icon-button" uk-icon="plus-circle; ratio: 3;"></a> -->
+        <button class="uk-icon-button" uk-icon="icon:plus-circle; ratio:2;" type="button"></button>
         <div class="newQuestion" uk-dropdown="pos: bottom-justify">
             <div class="uk-margin">
                 <div class="uk-form-controls uk-form-controls-text uk-text-left">
@@ -47,16 +48,20 @@
             <button class="uk-button uk-button-primary uk-button-small" @click="addToList()">Create</button>
         </div>
 
+        <Footer/>
     </div>
 </template>
 
-<script>
-    import Question from '../components/Question.vue'
+<script scoped>
+    import QuestionManager from '../components/QuestionManager.vue'
+    import Footer from '../components/Footer.vue'
 
     export default {
         name: 'Manage',
+        props: ['content'],
         components: {
-            Question
+            QuestionManager,
+            Footer
         }, data() {
             return {
                 questionList: [],
@@ -73,6 +78,10 @@
 </script>
 
 <style>
+    #app {
+        text-align: center;
+    }
+
     .uk-form-label {
         text-align: left;
     }

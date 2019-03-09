@@ -14,11 +14,11 @@
             <div v-if="content.type === 'multipleChoice'">
                 <div class="uk-margin">
                     <div class="uk-form-controls uk-form-controls-text uk-text-left">
-                        <div v-for="radio in radioList">
-                            <RadioButton v-bind:id="radio"/>
+                        <div v-for="radio in list">
+                            <RadioButton v-bind:id="{edit: true, id: null, option: radio}"/>
                         </div>
 
-                        <button class="uk-button uk-button-primary uk-button-small" type="button" @click="addRadioButton()">Add Option</button>
+                        <button class="uk-button uk-button-primary uk-button-small" type="button" @click="addButton()">Add Option</button>
                     </div>
                 </div>
             </div>
@@ -33,28 +33,41 @@
                 </div>
             </div>
 
+            <div v-if="content.type == 'checkbox'">
+                <div class="uk-margin">
+                    <div class="uk-form-controls uk-form-controls-text uk-text-left">
+                        <div v-for="checkbox in list">
+                            <Checkbox v-bind:id="{edit: true, id: null, option: checkbox}"/>
+                        </div>
+
+                        <button class="uk-button uk-button-primary uk-button-small" type="button" @click="addButton()">Add Option</button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Display a likert scale if the content.type is likert -->
             <!-- <div class="" v-if="content.type === 'likert'">
         </div> -->
+        </div>
     </div>
-</div>
 </template>
 
 <script>
 import RadioButton from './RadioButton.vue'
+import Checkbox from './Checkbox.vue'
 
 export default {
-    name: 'Question',
+    name: 'QuestionManager',
     props: ['content'],
     components: {
         RadioButton
     }, data() {
             return {
-                radioList: []
+                list: []
             }
     }, methods: {
-        addRadioButton: function() {
-            this.radioList.push("")
+        addButton: function() {
+            this.list.push("")
         }
     }
 }

@@ -39,5 +39,5 @@ export default {
 </script>
 
 <style>
-
+    .uk-logo { width: 5em; }
 </style>
