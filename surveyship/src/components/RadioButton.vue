@@ -1,7 +1,7 @@
 <template>
     <div id="newRadioButton">
         <div v-if="this.mode === 'answering'">
-            <div v-for="radio in question.options">
+            <div v-for="radio in question.options" v-bind:key="radio">
                 <label v-if="radio !== ''">
                     <input class="uk-radio" type="radio" :value="radio" :name="question.title"
                            v-model="question.response"> {{ radio }}
@@ -10,7 +10,7 @@
         </div>
         <div v-else>
             <QuestionManager/>
-            <div v-for="(radio, index) in this.question.options">
+            <div v-for="(radio, index) in this.question.options" v-bind:key="radio">
                 <div class="columns" @mouseover="trashIndex = index" @mouseleave="trashIndex = null">
                     <div class="column">
                         <input class="uk-radio" type="radio" disabled>

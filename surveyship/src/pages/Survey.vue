@@ -64,14 +64,15 @@ export default {
         ShortAnswer,
         RadioButton,
         Checkbox
-    }, data() {
+    },
+    data() {
         return {
             index: 0
          }
-    }, methods: {
+    },
+    methods: {
         finish: function() {
-            console.log("Finishing");
-            console.log(this.survey.questions);
+            console.log(this.survey.questions)
 
             this.$bus.$emit('manage', null)
             this.$bus.$emit('answer', null)

@@ -1,7 +1,7 @@
 <template>
     <div id="newCheckbox">
         <div v-if="this.mode === 'answering'">
-            <div v-for="(checkbox, index) in question.options">
+            <div v-for="(checkbox, index) in question.options" v-bind:key="checkbox">
                 <label v-if="checkbox !== ''">
                     <input class="uk-checkbox" type="checkbox" :name="question.questionNumber"
                            v-model="question.response[index].response"> {{ checkbox }}
@@ -11,7 +11,7 @@
         <div v-else>
             <QuestionManager/>
 
-            <div v-for="(radio, index) in this.question.options">
+            <div v-for="(checkbox, index) in this.question.options" v-bind:key="checkbox">
                 <div class="columns" @mouseover="trashIndex = index" @mouseleave="trashIndex = null">
                     <div class="column">
                         <input class="uk-checkbox" type="checkbox" disabled>
