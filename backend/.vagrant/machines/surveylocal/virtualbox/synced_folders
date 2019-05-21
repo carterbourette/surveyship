@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/surveyship":{"create":true,"group":"vagrant","owner":"vagrant","guestpath":"/home/surveyship","hostpath":"C:/Users/LJone/OneDrive/Desktop/Programs/surveyship/backend","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/Users/LJone/OneDrive/Desktop/Programs/surveyship/backend","disabled":false,"__vagrantfile":true}}}

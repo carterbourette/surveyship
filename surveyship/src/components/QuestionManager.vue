@@ -3,79 +3,58 @@
         <hr>
 
         <!-- Question Form -->
-        <label class="uk-form-label uk-text-left" for="form-stacked-text">Question</label>
-        <div class="uk-form-controls">
-            <input class="uk-input" id="title-form" type="text" placeholder="Enter your question:">
+        <div class="columns">
+            <label class="column uk-form-label uk-text-left">
+                Question {{$parent.question.questionNumber}}: {{$parent.question.type}}
+            </label>
+
+            <div class="column is-1">
+                <a  class="uk-icon-button" uk-icon="trash" @click="$bus.$emit('deleteQuestion', $parent.question.questionNumber)"/>
+            </div>
         </div>
 
-        <!-- input Form -->
-        <div v-if="content">
-            <!-- Display radio buttons if the content.type is multiple choice -->
-            <div v-if="content.type === 'multipleChoice'">
-                <div class="uk-margin">
-                    <div class="uk-form-controls uk-form-controls-text uk-text-left">
-                        <div v-for="radio in list">
-                            <RadioButton v-bind:id="{edit: true, id: null, option: radio}"/>
-                        </div>
-
-                        <button class="uk-button uk-button-primary uk-button-small" type="button" @click="addButton()">Add Option</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Display text boxes if the content.type is short answer -->
-            <div class="" v-if="content.type === 'shortAnswer'">
-                <div class="uk-margin">
-                    <label class="uk-form-label" for="form-stacked-text">Answer</label>
-                    <div class="uk-form-controls">
-                        <textarea class="uk-textarea" id="description-form" rows="4" placeholder="Enter your answer here"></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <div v-if="content.type == 'checkbox'">
-                <div class="uk-margin">
-                    <div class="uk-form-controls uk-form-controls-text uk-text-left">
-                        <div v-for="checkbox in list">
-                            <Checkbox v-bind:id="{edit: true, id: null, option: checkbox}"/>
-                        </div>
-
-                        <button class="uk-button uk-button-primary uk-button-small" type="button" @click="addButton()">Add Option</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Display a likert scale if the content.type is likert -->
-            <!-- <div class="" v-if="content.type === 'likert'">
-        </div> -->
+        <div class="columns">
+            <input class="column uk-input" v-model="$parent.question.title" id="title-form" type="text" placeholder="Enter your question:">
         </div>
     </div>
 </template>
 
 <script>
-import RadioButton from './RadioButton.vue'
-import Checkbox from './Checkbox.vue'
-
 export default {
     name: 'QuestionManager',
-    props: ['content'],
-    components: {
-        RadioButton
-    }, data() {
-            return {
-                list: []
-            }
-    }, methods: {
-        addButton: function() {
-            this.list.push("")
+    props: ['question', 'mode'],
+    data() {
+        return {
+            trashIndex: null
+        }
+    },
+    methods: {
+        checkForEmpty() {
+            // Ensure there is always an empty option to add new ones
+            if (this.question.options && this.question.options[this.question.options.length-1] !== "")
+                this.question.options.push("")
+        },
+        deleteOption(index) {
+            if (index >= 0 && index < this.question.options.length)
+                if (confirm("Are you sure you want to delete this option?"))
+                    this.question.options.splice(index, 1)
+        }
+    },
+    watch: {
+        'question.options': function() {
+            this.checkForEmpty()
         }
     }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    .uk-button {
-        padding: 5px;
+    label {
+        font-size: 1.5rem;
+    }
+
+    hr {
+        margin: 100px;
+        border-color: black;
     }
 </style>

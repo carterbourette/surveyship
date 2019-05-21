@@ -1,44 +1,32 @@
 <template>
-    <div id="app">
-        <div class="uk-section uk-section-secondary uk-light">
-            <div class="uk-container">
-                <div class="columns is-centered">
-                    <div class="column-is-one">
-                        <p>Carter Bourette <a class="uk-icon-button" uk-icon="world" href="https://carterbourette.com/" target="_blank"></a></p>
-                    </div>
+    <div class="uk-section uk-section-secondary">
+        <div class="columns is-centered">
+            <p class="column-is-one">
+                Carter Bourette
+                <a class="uk-icon-button" uk-icon="world" href="https://carterbourette.com/" target="_blank"/>
+            </p>
 
-                    <p class="column-is-one"> Copyright &copy; 2019 </p>
+            <p class="column-is-one">
+                Copyright &copy; {{1900+new Date().getYear()}}
+            </p>
 
-                    <div class="column-is-one">
-                        <p><a class="uk-icon-button" uk-icon="world" href="https://ljones.ca/" target="_blank"></a> Liam Jones</p>
-                    </div>
-                </div>
-            </div>
+            <p class="column-is-one">
+                <a class="uk-icon-button" uk-icon="world" href="https://ljones.ca/" target="_blank"/>
+                 Liam Jones
+             </p>
         </div>
     </div>
 </template>
 
-<script>
-
-    export default {
-        name: 'Footer',
-        components: {
-        },
-        data() {
-            return {
-            }
-        }
-    }
-</script>
-
-<style>
-    .uk-section {
-        padding: 4em;
-        margin-top: 10em;
-    }
-
+<style scoped>
     p {
         margin: 1px 40px;
         font-size: 1.4rem;
+    }
+
+    a { margin: 0 10px; }
+
+    .uk-section {
+        height: 10vh;
     }
 </style>

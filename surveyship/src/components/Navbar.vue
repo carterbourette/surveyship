@@ -1,12 +1,13 @@
 <template>
-    <div id="app">
+    <div id="Navbar">
         <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #transparent-sticky-navbar">
             <nav class="uk-navbar-container uk-margin" uk-navbar>
                 <div class="nav-overlay uk-navbar-left">
-                    <a class="uk-navbar-item uk-logo" href="#"><img src="@/assets/fakeIcon.png" alt="Logo"></a>
+                    <a class="uk-navbar-item uk-logo" @click="goHome()"><img src="@/assets/fakeIcon.png" alt="Logo"></a>
                     <ul class="uk-navbar-nav">
-                        <li class="uk-active"><a href="#publicSurveys">Public Surveys</a></li>
-                        <li class="uk-active"><a href="#privateSurveys">Private Surveys</a></li>
+                        <li><a class="size" @click="goHome()" href="#">Home</a></li>
+                        <li><a class="size" href="#publicSurveys">Public Surveys</a></li>
+                        <li><a class="size" href="#privateSurveys">Private Surveys</a></li>
                     </ul>
                 </div>
                 <div class="nav-overlay uk-navbar-right">
@@ -29,15 +30,17 @@
 
 export default {
     name: 'Navbar',
-    components: {
-    },
-    data() {
-        return {
+    methods: {
+        goHome() {
+            this.$bus.$emit('manage', null)
+            this.$bus.$emit('answer', null)
         }
     }
 }
 </script>
 
-<style>
+<style scoped>
+    #Navbar  { height: 10vh; }
     .uk-logo { width: 5em; }
+    .size    { font-size: 1.2rem; }
 </style>

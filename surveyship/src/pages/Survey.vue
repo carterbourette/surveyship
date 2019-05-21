@@ -1,57 +1,104 @@
 <template>
-    <div id="app">
+    <div id="Survey">
         <div class="container columns is-multiline is-centered" style="margin:auto;" >
             <div class="column is-one">
-                <h1>{{ content.title }}</h1>
-                <h3>{{ content.desc }}</h3>
+                <h1>{{ survey.title }}</h1>
+                <h3>{{ survey.desc }}</h3>
 
-                <QuestionSurvey v-bind:content="content.questions[index]" v-model="response"/>
+                <div class="container columns is-centered">
+                    <div class="column is-one-quarter">
+                        <a v-if="index > 0" @click="index--"> <span uk-pagination-previous/> Previous</a>
+                    </div>
 
-                <ul class="uk-pagination">
-                    <li v-if="index > 0"><a v-on:click="addToResponses(index--)"><span class="uk-margin-small-right" uk-pagination-previous></span> Previous</a></li>
-                    <li v-if="index < content.questions.length-1" class="uk-margin-auto-left"><a v-on:click="addToResponses(index++)">Next <span class="uk-margin-small-left" uk-pagination-next></span></a></li>
-                    <li v-else class="uk-margin-auto-left"><a v-on:click="finish()">Finish <span class="uk-margin-small-left"></span></a></li>
-                </ul>
+                    <div class="column is-half">
+                        <progress class="uk-progress" :value="index" :max="survey.questions.length"/>
+                    </div>
 
-                <!-- {{responses}} -->
+                    <div class="column is-one-quarter">
+                        <a v-if="index < survey.questions.length-1" @click="index++">Next <span uk-pagination-next/></a>
+                        <a v-else @click="index++;finish()"> Finish</a>
+                    </div>
+                </div>
+
+                <div v-if="index < survey.questions.length && index >= 0">
+                    <!-- Question Title -->
+                    <h4>{{ survey.questions[index].title }}</h4>
+
+                    <!-- input Form -->
+                    <div v-if="survey.questions[index]" class="columns is-centered" id="questionBody">
+                        <div class="column is-one-third uk-text-left">
+                            <!-- Key is important!! It forces rerendering the component when updating the index -->
+                            <!-- Display text boxes if the survey.type is short answer -->
+                            <div v-if="survey.questions[index].type === 'shortAnswer'" :key="survey.questions[index].questionNumber">
+                                <ShortAnswer :question="survey.questions[index]" :mode="'answering'"/>
+                            </div>
+
+                            <!-- Display radio buttons if the survey.type is multiple choice -->
+                            <div v-else-if="survey.questions[index].type === 'multipleChoice'" :key="survey.questions[index].questionNumber">
+                                <RadioButton :question="survey.questions[index]" :mode="'answering'"/>
+                            </div>
+
+                            <!-- Display check boxes if the survey.type is checkbox -->
+                            <div v-else-if="survey.questions[index].type === 'checkBox'" :key="survey.questions[index].questionNumber">
+                                <Checkbox    :question="survey.questions[index]" :mode="'answering'"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <Footer/>
     </div>
 </template>
 
 <script>
-    import QuestionSurvey from '../components/QuestionSurvey.vue'
-    import Footer from '../components/Footer.vue'
+import Dashboard from './Dashboard.vue'
+import ShortAnswer from '../components/ShortAnswer.vue'
+import RadioButton from '../components/RadioButton.vue'
+import Checkbox from '../components/Checkbox.vue'
 
-    export default {
-        name: 'Manage',
-        props: ['content'],
-        components: {
-            QuestionSurvey,
-            Footer
-        }, data() {
-            return {
-                index: 0,
-                responses: [],
-                response: null
-             }
-        }, methods: {
-            addToResponses(index) {
-                this.responses[index] = this.response
-                this.response = null;
-            },
-            finish: function() {
+export default {
+    name: 'Manage',
+    extends: Dashboard,
+    props: ['survey'],
+    components: {
+        ShortAnswer,
+        RadioButton,
+        Checkbox
+    }, data() {
+        return {
+            index: 0
+         }
+    }, methods: {
+        finish: function() {
+            console.log("Finishing");
+            console.log(this.survey.questions);
 
-            }
+            this.$bus.$emit('manage', null)
+            this.$bus.$emit('answer', null)
         }
+    },
+    mounted: function() {
+        this.setIndices(this.survey)
     }
+}
 </script>
 
-<style>
-    #app { text-align: center; }
+<style scoped>
+    #Survey {
+        background-image: url('../assets/shattered.png');
+        text-align: center;
+        font-size: 2rem;
 
-    h1 { font-size: 3rem; }
-    h3 { font-size: 2rem;}
+        min-height: 85vh;
+    }
+
+    h1 { font-size: 3.5rem; }
+    h3 { font-size: 2.5rem; }
+    hr { margin: 3rem auto; }
+    a  { font-size: 1.5rem; }
+
+    h4 {
+        font-family: 'Roboto', sans-serif;
+        font-size: 2rem;
+    }
 </style>

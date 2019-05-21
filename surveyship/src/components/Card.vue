@@ -1,47 +1,51 @@
 <template>
-    <div class="createCard">
+    <div class="uk-card-default uk-box-shadow-hover-xlarge">
+        <h2 class="uk-card-header uk-card-title">{{survey.title}}</h2>
 
-        <div class="uk-card-default uk-box-shadow-small uk-box-shadow-hover-xlarge">
-            <div class="uk-card-header">
-                <h2 class="uk-card-title">{{content.title}}</h2>
-            </div>
-
-            <div class="uk-card-body uk-text-break">{{content.body}}</div>
-            <!-- <div class="uk-card-body" v-if="content.body.length >= 180">{{content.body.substring(0,180) + " ..."}}</div> -->
-            <div class="uk-card-footer">
-                <div class="uk-button-group">
-                    <button class="uk-button uk-button-primary optionsButton"><span uk-icon="cog"></span> Manage</button>
-                    <button class="uk-button uk-button-primary optionsButton"><span uk-icon="database"></span> Analytics</button>
-                </div>
-            </div>
+        <div class="uk-card-body">{{survey.desc}}</div>
+        <div class="uk-card-footer uk-button-group">
+            <a href="#" >
+                <button class="uk-button uk-button-primary" @click="emitSignal('manage')">
+                    Manage <span uk-icon="cog"/>
+                </button>
+                <button class="uk-button uk-button-primary" @click="emitSignal('answer')">
+                    <span uk-icon="file-edit"/> Answer
+                </button>
+            </a>
         </div>
-
     </div>
 </template>
 
 <script>
     export default {
-        name: 'Card',
-        props: ['content']
+        props: ['survey'],
+        methods: {
+            emitSignal(mode) {
+                this.$bus.$emit(mode, this.survey)
+            }
+        }
     }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     .uk-card-default {
         background-image: url('../assets/snow.png');
         font-family: 'Roboto', sans-serif;
+        cursor: pointer;
     }
 
     .uk-card-body {
         padding: 0;
         margin: 5%;
-        height: 15vh;
+        height: 110px;
         line-height: 140%;
         font-size: 1.25rem;
 
-        /* white-space: nowrap; */
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    a {
+        color: white;
     }
 </style>
