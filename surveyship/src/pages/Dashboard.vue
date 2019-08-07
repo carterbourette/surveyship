@@ -30,20 +30,21 @@
 </template>
 
 <script>
-import Card from '../components/Card.vue'
+import Card from '@/components/Card.vue'
 
 export default {
     name: 'Dashboard',
     components: {
         Card
-    }, data() {
+    },
+    data() {
         return {
             cards: {
                 live:[{
                     title: 'Colours',
                     desc: 'This survey will ask you a series of questions to get to know your favourite colour.',
                     questions: [{
-                            type: 'checkBox',
+                            type: 'Checkbox',
                             title: 'What is your gender? (Check all that apply)',
                             questionNumber: 0,
                             options: [
@@ -54,7 +55,7 @@ export default {
                             ],
                             response: null
                         }, {
-                            type: 'checkBox',
+                            type: 'Checkbox',
                             title: 'What is your age?',
                             questionNumber: 0,
                             options: [
@@ -78,7 +79,7 @@ export default {
                             options: [],
                             response: null
                         }, {
-                            type: 'multipleChoice',
+                            type: 'RadioButton',
                             title: 'What is your favourite animal?',
                             questionNumber: 0,
                             options: [
@@ -89,7 +90,7 @@ export default {
                             ],
                             response: null
                         }, {
-                            type: 'multipleChoice',
+                            type: 'RadioButton',
                             title: 'What is your favourite food?',
                             questionNumber: 0,
                             options: [

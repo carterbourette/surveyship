@@ -24,7 +24,6 @@
                     </div>
 
                     <div class="column is-1"/>
-
                 </div>
             </div>
         </div>

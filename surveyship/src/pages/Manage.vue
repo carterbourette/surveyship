@@ -22,11 +22,7 @@
         <div class="columns is-centered">
             <div class="column is-half">
                 <div v-for="question in survey.questions">
-                    <RadioButton v-if="question.type === 'multipleChoice'"   :question="question" :mode="'edit'"/>
-
-                    <ShortAnswer v-else-if="question.type === 'shortAnswer'" :question="question" :mode="'edit'"/>
-
-                    <Checkbox    v-else-if="question.type === 'checkBox'"    :question="question" :mode="'edit'"/>
+                    <component :is="question.type" :question="question" :mode="'edit'" />
                 </div>
             </div>
         </div>
@@ -54,9 +50,9 @@
 <script>
 import Dashboard from './Dashboard.vue'
 
-import ShortAnswer from '../components/ShortAnswer.vue'
-import RadioButton from '../components/RadioButton.vue'
-import Checkbox from '../components/Checkbox.vue'
+import ShortAnswer from '@/questionTypes/ShortAnswer.vue'
+import RadioButton from '@/questionTypes/RadioButton.vue'
+import Checkbox from '@/questionTypes/Checkbox.vue'
 
 export default {
     name: 'Manage',
@@ -66,7 +62,8 @@ export default {
         ShortAnswer,
         RadioButton,
         Checkbox
-    }, data() {
+    },
+    data() {
         return {
             option: null
         }
@@ -90,8 +87,10 @@ export default {
     },
     mounted: function() {
         this.$bus.$on('deleteQuestion', index => {
-            this.survey.questions.splice(index, 1)
-            this.setIndices(this.survey)
+            if (confirm('Are you sure you want to delete this question?')) {
+                this.survey.questions.splice(index, 1)
+                this.setIndices(this.survey)
+            }
         }),
 
         this.setIndices(this.survey)

@@ -3,7 +3,7 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
-//Create an event bus for global events
+// Create an event bus for global events
 const EventBus = new Vue();
 
 /*
@@ -19,6 +19,8 @@ Object.defineProperties(Vue.prototype, {
         }
     }
 });
+
+require('./components.js');
 
 new Vue({
   render: h => h(App),

@@ -28,20 +28,8 @@
                     <div v-if="survey.questions[index]" class="columns is-centered" id="questionBody">
                         <div class="column is-one-third uk-text-left">
                             <!-- Key is important!! It forces rerendering the component when updating the index -->
-                            <!-- Display text boxes if the survey.type is short answer -->
-                            <div v-if="survey.questions[index].type === 'shortAnswer'" :key="survey.questions[index].questionNumber">
-                                <ShortAnswer :question="survey.questions[index]" :mode="'answering'"/>
-                            </div>
-
-                            <!-- Display radio buttons if the survey.type is multiple choice -->
-                            <div v-else-if="survey.questions[index].type === 'multipleChoice'" :key="survey.questions[index].questionNumber">
-                                <RadioButton :question="survey.questions[index]" :mode="'answering'"/>
-                            </div>
-
-                            <!-- Display check boxes if the survey.type is checkbox -->
-                            <div v-else-if="survey.questions[index].type === 'checkBox'" :key="survey.questions[index].questionNumber">
-                                <Checkbox    :question="survey.questions[index]" :mode="'answering'"/>
-                            </div>
+                            <component :is="survey.questions[index].type" :question="survey.questions[index]"
+                                       :mode="'answering'" :key="survey.questions[index].questionNumber" />
                         </div>
                     </div>
                 </div>
@@ -52,9 +40,9 @@
 
 <script>
 import Dashboard from './Dashboard.vue'
-import ShortAnswer from '../components/ShortAnswer.vue'
-import RadioButton from '../components/RadioButton.vue'
-import Checkbox from '../components/Checkbox.vue'
+import ShortAnswer from '@/questionTypes/ShortAnswer.vue'
+import RadioButton from '@/questionTypes/RadioButton.vue'
+import Checkbox from '@/questionTypes/Checkbox.vue'
 
 export default {
     name: 'Manage',

@@ -17,38 +17,38 @@
 </template>
 
 <script>
-    import Navbar from './components/Navbar.vue'
-    import Footer from './components/Footer.vue'
+import Navbar from './components/Navbar.vue'
+import Footer from './components/Footer.vue'
 
-    import Dashboard from './pages/Dashboard.vue'
-    import Manage from './pages/Manage.vue'
-    import Survey from './pages/Survey.vue'
+import Dashboard from './pages/Dashboard.vue'
+import Manage from './pages/Manage.vue'
+import Survey from './pages/Survey.vue'
 
-    export default {
-        name: 'app',
-        components: {
-            Navbar,
-            Footer,
+export default {
+    name: 'app',
+    components: {
+        Navbar,
+        Footer,
 
-            Dashboard,
-            Manage,
-            Survey
-        },
-        data() {
-            return {
-                editSurvey: null,
-                answerSurvey: null
-            }
-        },
-        mounted: function() {
-            this.$bus.$on('manage', survey => {
-                this.editSurvey = survey
-            }),
-            this.$bus.$on('answer', survey => {
-                this.answerSurvey = survey
-            })
+        Dashboard,
+        Manage,
+        Survey
+    },
+    data() {
+        return {
+            editSurvey: null,
+            answerSurvey: null
         }
+    },
+    mounted: function() {
+        this.$bus.$on('manage', survey => {
+            this.editSurvey = survey
+        }),
+        this.$bus.$on('answer', survey => {
+            this.answerSurvey = survey
+        })
     }
+}
 </script>
 
 <style>
