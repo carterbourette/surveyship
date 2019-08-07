@@ -1,7 +1,5 @@
 # surveyship
 
-a linked membership survey system
-
 ## Project setup
 ```
 npm install
